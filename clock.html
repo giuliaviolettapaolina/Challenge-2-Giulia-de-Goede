@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>clock</title>
+        <link type="text/css" href="clock.css" rel="stylesheet">
+    </head>
+    <body>
+        
+        <div id="sun"></div>
+        <div class="clock"><h1 id="clock">00 : 00 : 00</h1></div>
+        
+        <div class="date">
+        <span id="day"></span>
+        <span id="date"></span>
+        <span id="month"></span>
+        <span id="year"></span>
+        </div>
+
+        <p id="text">time for coffee</p>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenLite.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/easing/EasePack.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TimelineMax.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
+        <script>
+            var clock = document.getElementById('clock');
+            var hexColor = document.getElementById('hex-color');
+            var text = document.getElementById('text');
+            var sun = document.getElementById('sun');
+            var today = new Date();
+            var text = document.getElementById("text")
+
+            document.getElementById('month').innerHTML = today.getMonth();
+            document.getElementById('year').innerHTML = today.getFullYear();
+            document.getElementById('date').innerHTML = today.getDate();
+            //document.getElementById('day').innerHTML = today.getDay();
+            
+
+            
+            function hexClock(){
+                var time = new Date();
+                var hours = time.getHours().toString();
+                var minutes = time.getMinutes().toString();
+                var seconds = time.getSeconds().toString();
+                
+                if(hours.length < 2){
+                    hours = '0' + hours;
+                }
+                
+                if(minutes.length < 2) {
+                    minutes = '0' + minutes;
+                }
+                
+                if(seconds.length < 2) {
+                    seconds = '0' + seconds;
+                }
+                
+                var clockStr = hours + ':' + minutes + ':' + seconds;
+                //var hexColorStr = '#' + hours + minutes + seconds;
+                
+                clock.textContent = clockStr;
+                //hexColor.textContent = hexColorStr;
+                
+                //document.body.style.backgroundColor = hexColorStr
+                
+                
+                
+                var currentTime = new Date().getHours();
+                if ( currentTime> 6 &&currentTime<9) {
+                if(document.body) {
+                    document.body.background = "sunrise.png";
+                    }
+                }
+                else if (currentTime>=9 &&currentTime < 20) {
+                    if(document.body) {
+                        document.body.background = "daytime.png";
+                        
+                    }
+                }
+                else if (currentTime>20 &&currentTime < 24) {
+                    if(document.body) {
+                        document.body.background = "sunset.png";
+                    }
+                }
+                else {
+                    if (document.body) {
+                        document.body.background = "nighttime.png";
+                    }
+                }
+                
+                TweenLite.to(sun, 2, {y:350, ease:Elastic.easeOut.config(3.1, 0.4)});
+                TweenLite.to(text, 2, {x:1000, ease:Elastic.easeOut.config(0.8, 0.4)});
+            
+            }
+            
+            setInterval(hexClock,1000);
+            setInterval(changeColor,1000);
+        </script>
+    </body>
+</html>
